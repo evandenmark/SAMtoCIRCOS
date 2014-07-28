@@ -413,7 +413,7 @@ def make_files(samfile, windowSize, end_size, fasta):
 			
 
 	    # MAKE THE GAP FILE
-	    new_file5 = open('output.gap.txt', 'w')
+	    new_file5 = open('output.gaps.txt', 'w')
 	    for scaffold in gap_dict:
 		the_scaffold = str(scaffold)
 		for gap in gap_dict[scaffold]:
