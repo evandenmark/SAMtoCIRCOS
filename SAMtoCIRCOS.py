@@ -331,7 +331,7 @@ def make_files(samfile, windowSize, end_size, fasta):
     """
     
 
-    # MAKE THE COVERAGE FILE
+    
     genome = genomeCoverage(samfile, windowSize, end_size, fasta)
     if fasta != None:
     	gap_dict = genome[4]
@@ -340,10 +340,39 @@ def make_files(samfile, windowSize, end_size, fasta):
     end_piece_dict = genome[1]
     scaffold_dict = genome[0]
     
+    scaff_list = []
+    len_list = []
+    end_list = []
+    gc_list = []
+    gap_list = []
+
+    for scaffold in scaffold_dict:
+        scaff_list.append(scaffold)
+    scaff_list = sorted(scaff_list)
+
+    for each_scaffold in len_dict:
+        len_list.append(each_scaffold)
+    len_list = sorted(len_list)
+
+    for the_scaffold in end_piece_dict:
+        end_list.append(the_scaffold)
+    end_list = sorted(end_list)
+
+    if fasta != None:
+        for scaffolds in gc_dict:
+            gc_list.append(scaffolds)
+        gc_list= sorted(gc_list)
+
+        for a_scaffold in in gap_dict:
+            gap_list.append(a_scaffold)
+        gap_list = sorted(gap_list)
+
+
+    # MAKE THE COVERAGE FILE    
     new_file = open('output.coverage.txt', 'w')
 
     end=0
-    for scaffold in scaffold_dict:
+    for scaffold in scaff_list:
         length = int(len_dict[scaffold])
         for subunit in scaffold_dict[scaffold]:
             start = subunit*windowSize
@@ -359,7 +388,7 @@ def make_files(samfile, windowSize, end_size, fasta):
     new_file2 = open('output.karyotype.txt', 'w')
 
     n=0
-    for scaffold in len_dict:
+    for scaffold in len_list:
 	if n == 7:
 		n=0
         length = int(len_dict[scaffold])
@@ -372,7 +401,7 @@ def make_files(samfile, windowSize, end_size, fasta):
     # MAKE THE ENDS FILE
 
     new_file3 = open('output.ends.txt', 'w')
-    for scaffold in end_piece_dict:
+    for scaffold in end_list:
 	for each_end in end_piece_dict[scaffold]:        
 		original = str(scaffold)
         	original_start = str(each_end[0])
@@ -396,7 +425,7 @@ def make_files(samfile, windowSize, end_size, fasta):
 
 	    # MAKE THE GC FILE
 	    new_file4 = open('output.gc.txt', 'w')
-	    for scaffold in gc_dict:
+	    for scaffold in gc_list:
 		the_scaffold = str(scaffold)
 		length = int(len_dict[scaffold])
 	    	for subunit in gc_dict[scaffold]:
@@ -414,7 +443,7 @@ def make_files(samfile, windowSize, end_size, fasta):
 
 	    # MAKE THE GAP FILE
 	    new_file5 = open('output.gaps.txt', 'w')
-	    for scaffold in gap_dict:
+	    for scaffold in gap_list:
 		the_scaffold = str(scaffold)
 		for gap in gap_dict[scaffold]:
 			gap_start=str(gap[0])
