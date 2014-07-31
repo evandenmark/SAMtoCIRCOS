@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 ###############################################################################
 #
 #    genomeCoverage.py version 1.0
